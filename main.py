@@ -3,21 +3,19 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import random
 
-def anmimate_bar(values, func):
+def animate_bar(func, values):
     fig = plt.figure(figsize=(8,6))
     axes = fig.add_subplot(1,1,1)
     axes.set_ylim(0, 10)
 
-    indices = list(range(0, 10))
-    values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
+    results = func(values)
 
     def update(frame):
         plt.clf()
-        func(values)
-        print(values)
-        plt.bar(indices, values, color='blue')
+        indices = [str(i) for i in results[frame]]
+        plt.bar(indices, results[frame], color='blue')
 
-    ani = FuncAnimation(fig, update, frames=np.linspace(0, 2*np.pi, 128))
+    ani = FuncAnimation(fig, update, frames=range(len(results)), interval=100, 
+            repeat=False)
     plt.show()
 
